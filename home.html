@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Stationery Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
 </head>
 <body>
 
@@ -25,19 +27,20 @@
         </div>
     </nav>
 </header>
+
 <section class="hero">
     <div class="hero-content">
         <h1>Welcome to Stationery Shop</h1>
         <p>Your one-stop shop for writing, paper, and art supplies.</p>
-        <a href="#products" class="btn">Shop Now</a>
+        <a href="#shop" class="btn">Shop Now</a>
     </div>
 </section>
-<section class="categories">
+<section class="categories" id="shop">
     <h2>Shop by Category</h2>
     <div class="card-container">
 
         <div class="card">
-            <img src="images/pen_showcase.png" alt="Writing Supplies">
+            <img src="images/pen_showcase_1.png" alt="Writing Supplies">
             <h3>Writing Supplies</h3>
         </div>
 
@@ -57,8 +60,131 @@
         </div>
 
     </div>
+</section><br>
+<section class="offer-banner" id="offerBanner">
+    <p>🎉 Get Flat 20% Off on Your First Order! Use Code: FIRST20 🎉</p>
+</section><br><br>
+<section class="product-carousel">
+    <h2>Featured Products</h2>
+    <div class="carousel-container">
+
+        <div class="product-card">
+            <img src="images/featured products/pen.jpg" alt="Ball Pen">
+            <h3>Ball Pen</h3>
+            <p>₹10</p>
+        </div>
+
+        <div class="product-card">
+            <img src="images/featured products/marker.jpg" alt="Marker">
+            <h3>Permanent Marker</h3>
+            <p>₹25</p>
+        </div>
+
+        <div class="product-card">
+            <img src="images/featured products/spiral notebook.jpg" alt="Notebook">
+            <h3>Spiral Notebook</h3>
+            <p>₹60</p>
+        </div>
+
+        <div class="product-card">
+            <img src="images/featured products/sketch book.jpg" alt="Sketchbook">
+            <h3>Sketchbook</h3>
+            <p>₹120</p>
+        </div>
+
+    </div>
+</section>
+<section class="brands">
+    <h2>Our Partner Brands</h2><br>
+    <div id="brandCarousel" class="carousel slide">
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center custom-gap">
+                    <img src="images/logo/camlin.png"  alt="Camlin" class="d-block" style="max-height: 50px;">
+                    <img src="images/logo/faber-castell.svg" alt="Faber-Castell" class="d-block" style="max-height: 80px;">
+                    <img src="images/logo/classmate.svg" alt="Classmate" class="d-block" style="max-height: 80px;">
+                </div>
+            </div>
+                
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center custom-gap">
+                    <img src="images/logo/pental" alt="Parker" class="d-block" style="max-height: 80px;">
+                    <img src="images/logo/Reynolds.png" alt="Reynolds" class="d-block" style="max-height: 80px;">
+                    <img src="images/logo/pentonic.png" class="d-block" alt="Pidilite" style="max-height: 80px;">
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center custom-gap">
+                    <img src="images/logo/cello.webp" class="d-block" alt="Cello" style="max-height: 80px;">
+                    <img src="images/logo/LINC" class="d-block" alt="Pilot" style="max-height: 80px;">
+                    <img src="images/logo/uniball.webp" class="d-block" alt="Uniball" style="max-height: 80px;">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#brandCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#brandCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+        </div>
+</section>
+<section class="newsletter">
+    <h2>Stay Updated!</h2>
+    <p>Subscribe to our newsletter and get 10% off your first purchase.</p>
+    <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Enter your email" id="emailInput" required>
+        <button type="submit">Subscribe</button>
+    </form>
+    <p id="successMessage" style="color: green; font-weight: bold; display: none; margin-top: 15px;">
+        Thank you for subscribing!
+    </p>
+</section>
+<section class="testimonials">
+    <h2>What Our Customers Say</h2><bR>
+    <div class="testimonial-container">
+
+        <div class="testimonial-card">
+            <p>"Excellent quality stationery at great prices. Fast delivery too!"</p>
+            <h4>- Riya Shah</h4>
+        </div>
+
+        <div class="testimonial-card">
+            <p>"I love the variety. Got all my office supplies from here!"</p>
+            <h4>- Ankit Patel</h4>
+        </div>
+
+        <div class="testimonial-card">
+            <p>"Their customer service is top-notch. Highly recommended."</p>
+            <h4>- Meera Desai</h4>
+        </div>
+
+    </div>
+</section>
+<section class="about-us">
+    <h2>Why Choose Our Stationery Shop?</h2>
+    <p>
+        We offer a wide variety of high-quality stationery products at affordable prices.
+        Our commitment to fast delivery, excellent customer service, and exclusive deals
+        makes us the preferred choice for students, artists, and professionals.
+    </p>
 </section>
 
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <p>&copy; 2025 Stationery Shop. All rights reserved.</p>
+    </div>
+</footer>
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

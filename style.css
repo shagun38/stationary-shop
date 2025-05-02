@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito:wght@400&display=swap');
+
+/* main body */
 body {
     margin: 0;
     font-family: 'Nunito', sans-serif;
@@ -47,6 +49,9 @@ h1, h2, h3, .logo {
     border-radius: 4px;
 }
 
+
+
+/* hero section */
 .hero {
     width: 100%;
     height: 100vh;
@@ -77,6 +82,8 @@ h1, h2, h3, .logo {
     font-weight: bold;
 }
 
+
+/* categories section */
 .categories {
     text-align: center;
     padding: 40px 20px;
@@ -118,3 +125,191 @@ h1, h2, h3, .logo {
     transform: scale(1.05);
 }
 
+/* offer banner */
+.offer-banner {
+    background-color: #ffb347;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0px;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.5s ease-in-out;
+}
+
+.offer-banner:hover {
+    background-color: #dc3545; /* Change to bright red */
+    transform: translateY(-10px); /* Slight bounce */
+    cursor: pointer; /* Show pointer */
+}
+
+
+
+/* products section */
+.product-carousel {
+    padding: 30px;
+    text-align: center;
+}
+
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+    scroll-behavior: smooth;
+}
+
+.product-card {
+    min-width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 10px 0 5px;
+}
+
+.product-card p {
+    font-weight: bold;
+}
+
+
+/* brands */
+.brands {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #ffb347;
+    border-radius: 50%;
+    background-size: 100% 100%;
+}
+
+.custom-gap {
+    gap: 70px;
+}
+
+/* newsletter */
+.newsletter {
+    background: #f8f9fa;
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"],
+.newsletter-form button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.newsletter-form input[type="email"] {
+    border: 1px solid #ccc;
+    flex: 1;
+    min-width: 200px;
+}
+
+.newsletter-form button {
+    background: #2e8b57;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.newsletter-form button:hover {
+    background: #246b46;
+}
+
+/* testmonial */
+.testimonials {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.testimonial-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.testimonial-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.testimonial-card p {
+    font-style: italic;
+}
+
+.testimonial-card h4 {
+    margin-top: 15px;
+    font-weight: normal;
+    color: #555;
+}
+
+/* about us */
+.about-us {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.about-us h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.about-us p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* footer */
+.site-footer {
+    background-color: #2e8b57;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}

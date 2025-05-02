@@ -2,7 +2,8 @@
 body {
     margin: 0;
     font-family: 'Nunito', sans-serif;
-    overflow: hidden;
+   
+    height: 100%;
 }
 
 h1, h2, h3, .logo {
@@ -11,7 +12,6 @@ h1, h2, h3, .logo {
 
 .navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: white;
     padding: 10px 20px;
@@ -75,5 +75,46 @@ h1, h2, h3, .logo {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+}
+
+.categories {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.categories h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 220px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 

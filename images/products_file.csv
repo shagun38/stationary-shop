@@ -1,0 +1,41 @@
+category,name,description,price,image
+Writing Supplies,Ball Pen,Smooth writing pen,10,images/pen1.jpg
+Writing Supplies,Gel Pen,Comfortable grip and smooth ink,20,images/gelpen.jpg
+Writing Supplies,Permanent Marker,Long-lasting permanent marker,25,images/marker.jpg
+Writing Supplies,Fountain Pen,Elegant fountain pen,150,images/fountain_pen.jpg
+Writing Supplies,Pencil,HB graphite pencil,5,images/pencil.jpg
+Writing Supplies,Mechanical Pencil,Auto lead mechanical pencil,30,images/mechanical_pencil.jpg
+Writing Supplies,Highlighter,Bright colored highlighter,15,images/highlighter.jpg
+Writing Supplies,Sketch Pen,Set of 12 sketch pens,50,images/sketch_pen.jpg
+Writing Supplies,Erasable Pen,Ink that erases cleanly,35,images/erasable_pen.jpg
+Writing Supplies,Calligraphy Pen,Professional calligraphy pen,120,images/calligraphy_pen.jpg
+Paper Products,Notebook,A5 size ruled notebook,60,images/notebook.jpg
+Paper Products,Sticky Notes,Pack of 5 sticky note pads,50,images/sticky_notes.jpg
+Paper Products,Graph Paper Pad,50-sheet graph paper,40,images/graph_paper.jpg
+Paper Products,Drawing Sheet Pack,50 sheets drawing paper,45,images/drawing_sheet.jpg
+Paper Products,Printer Paper,A4 size printer paper,300,images/printer_paper.jpg
+Paper Products,Ruled Paper,200 pages ruled paper,30,images/ruled_paper.jpg
+Paper Products,Plain Paper,100 pages plain paper,20,images/plain_paper.jpg
+Paper Products,Scrapbook,Colorful scrapbook,70,images/scrapbook.jpg
+Paper Products,Index Cards,Set of 100 index cards,25,images/index_cards.jpg
+Paper Products,Legal Pad,Legal pad with perforated pages,35,images/legal_pad.jpg
+Art & Craft,Watercolor Set,Set of 24 watercolors,200,images/watercolor.jpg
+Art & Craft,Acrylic Paint Set,Vibrant acrylic colors,300,images/acrylic_paint.jpg
+Art & Craft,Oil Pastel Box,Oil pastels in 48 shades,250,images/oil_pastel.jpg
+Art & Craft,Sketchbook,A4 size sketchbook,100,images/sketchbook.jpg
+Art & Craft,Brush Set,5 assorted brush sizes,80,images/brush_set.jpg
+Art & Craft,Charcoal Pencils,Professional charcoal pencils,90,images/charcoal_pencils.jpg
+Art & Craft,Palette,Durable plastic palette,60,images/palette.jpg
+Art & Craft,Spray Paint,High-quality spray paint,150,images/spray_paint.jpg
+Art & Craft,Canvas Board,8x10 canvas board,120,images/canvas_board.jpg
+Art & Craft,Marker Set,24 assorted color markers,180,images/marker_set.jpg
+Office Essentials,Stapler,Heavy duty stapler,150,images/stapler.jpg
+Office Essentials,Paper Clips,Box of 100 paper clips,20,images/paper_clips.jpg
+Office Essentials,Binder Clips,Pack of 12 binder clips,30,images/binder_clips.jpg
+Office Essentials,File Folder,Durable file folder,40,images/file_folder.jpg
+Office Essentials,Desk Organizer,Desk organizer tray,250,images/desk_organizer.jpg
+Office Essentials,Whiteboard Marker,Set of 4 whiteboard markers,80,images/whiteboard_marker.jpg
+Office Essentials,Paper Cutter,Sharp blade paper cutter,300,images/paper_cutter.jpg
+Office Essentials,Punch Machine,Double hole punch machine,200,images/punch_machine.jpg
+Office Essentials,Notepad,50-page lined notepad,60,images/notepad.jpg
+Office Essentials,Document Tray,Metal document tray,220,images/document_tray.jpg

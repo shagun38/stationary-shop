@@ -495,3 +495,87 @@ h1, h2, h3, .logo {
 .add-to-cart:hover {
     background-color: #246b46;
 }
+
+/* admin */
+/* ---- Admin table styling ---- */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #2e8b57;
+    color: white;
+}
+
+a.action-link {
+    color: #2e8b57;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+a.action-link:hover {
+    text-decoration: underline;
+}
+
+/* ---- Update quantity button ---- */
+.cart-quantity button {
+    padding: 6px 12px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cart-quantity button:hover {
+    background-color: #246b46;
+}
+
+/* ---- Billing form ---- */
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.checkout-form button {
+    padding: 10px 20px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.checkout-form button:hover {
+    background-color: #246b46;
+}
+
+/* ---- Responsive adjustments ---- */
+@media screen and (max-width: 768px) {
+    .product-row, .cart-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-image img, .cart-product img {
+        width: 100%;
+        height: auto;
+    }
+
+    .cart-summary {
+        text-align: left;
+    }
+}

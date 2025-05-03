@@ -55,12 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="#" method="POST">
         <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="password" id="password" 
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+        title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters" 
+        placeholder="Password" required>
+
         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+        <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            var password = document.getElementById('password').value;
+            var confirm = document.getElementById('confirm_password').value;
+
+            if (password !== confirm) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+            }
+        });
+        </script>
+
         <button type="submit" class="btn">Register</button>
     </form>
 
-    <p>Already have an account? <a href="login.php">Login here</a></p>
+    <p>Already have an account? <a href="login.">Login here</a></p>
 
 </section>
 

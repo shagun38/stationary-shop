@@ -1,6 +1,20 @@
 <?php
 session_start();
 include "db_connect.php";
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_qty'])) {
+    $product_id = $_POST['product_id'];
+    $new_qty = max(1, intval($_POST['quantity']));  // Ensure at least 1
+    $_SESSION['cart'][$product_id] = $new_qty;
+    header("Location: cart.php");
+    exit();
+}
+
+if (isset($_GET['remove'])) {
+    $remove_id = $_GET['remove'];
+    unset($_SESSION['cart'][$remove_id]);
+    header("Location: cart.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +50,7 @@ include "db_connect.php";
     <h1>Your Cart</h1>
 </section>
 
+
 <section class="cart-items">
 
 <?php
@@ -60,7 +75,12 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                         <div>
                             <h3>'.$product['name'].'</h3>
                             <p>Price: ₹'.$product['price'].'</p>
-                            <p>Quantity: '.$quantity.'</p>
+                            <form method="POST" style="display:inline-block;">
+                                <input type="hidden" name="product_id" value="'.$product_id.'">
+                                <input type="number" name="quantity" value="'.$quantity.'" min="1" style="width:60px;">
+                                <button type="submit" name="update_qty">Update</button>
+                            </form>
+                            <a href="cart.php?remove='.$product_id.'" onclick="return confirm(\'Remove this item?\')" style="color:red; margin-left:10px;">Remove</a>
                         </div>
                     </div>
                     <div class="cart-total">

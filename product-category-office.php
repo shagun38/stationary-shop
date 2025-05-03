@@ -1,0 +1,69 @@
+<?php
+include "db_connect.php";
+
+$category = "Office Essentials";
+
+$sql = "SELECT * FROM products WHERE category = '$category'";
+$result = $conn->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stationery Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo" ><a href="home.html" style="text-decoration: none;color: #333">Stationery Shop</a></div>
+
+        <ul class="nav-links">
+            <li><a href="product-category-writing.php">Writing Supplies</a></li>
+            <li><a href="product-category-paper.php">Paper Products</a></li>
+            <li><a href="product-category-art.php">Art & Craft</a></li>
+            <li><a href="product-category-office.php">Office Essentials</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <input type="text" placeholder="Search..." class="search-box">
+            <a href="login.php">Login</a>
+            <a href="cart.php">Cart</a>
+        </div>
+    </nav>
+</header>
+
+<section class="category-header">
+    <h1>Office Essentials</h1>
+    <p>Essential office supplies to keep your workspace organized and efficient.</p>
+</section>
+<section class="product-list">
+<?php
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo '<div class="product-row">
+                <div class="product-image">
+                    <img src="'.$row['image'].'" alt="'.$row['name'].'">
+                </div>
+                <div class="product-details">
+                    <h3>'.$row['name'].'</h3>
+                    <p>'.$row['description'].'</p>
+                    <p class="price">₹'.$row['price'].'</p>
+                </div>
+                <div class="product-action">
+                    <button class="add-to-cart" data-product-id="'.$row['id'].'" class="add-to-cart">+</button>
+                </div>
+            </div>';
+    }
+} else {
+    echo "<p>No products found.</p>";
+}
+?>
+</section>
+</body>
+</html>

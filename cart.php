@@ -1,19 +1,29 @@
 <?php
 session_start();
-include "db_connect.php";
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_qty'])) {
-    $product_id = $_POST['product_id'];
-    $new_qty = max(1, intval($_POST['quantity']));  // Ensure at least 1
-    $_SESSION['cart'][$product_id] = $new_qty;
-    header("Location: cart.php");
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $item = [
+        'id' => $_POST['id'],
+        'name' => $_POST['name'],
+        'price' => $_POST['price'],
+        'quantity' => $_POST['quantity']
+    ];
 
-if (isset($_GET['remove'])) {
-    $remove_id = $_GET['remove'];
-    unset($_SESSION['cart'][$remove_id]);
-    header("Location: cart.php");
-    exit();
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    // Check if item already in cart
+    $found = false;
+    foreach ($_SESSION['cart'] as &$cart_item) {
+        if ($cart_item['id'] == $item['id']) {
+            $cart_item['quantity'] += $item['quantity'];
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) {
+        $_SESSION['cart'][] = $item;
+    }
 }
 ?>
 
@@ -50,56 +60,35 @@ if (isset($_GET['remove'])) {
     <h1>Your Cart</h1>
 </section>
 
-
 <section class="cart-items">
-
 <?php
-$total = 0;
-
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-
-    foreach ($_SESSION['cart'] as $product_id => $quantity) {
-
-        $sql = "SELECT * FROM products WHERE id = $product_id";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            $product = $result->fetch_assoc();
-
-            $item_total = $product['price'] * $quantity;
-            $total += $item_total;
-
-            echo '<div class="cart-row">
-                    <div class="cart-product">
-                        <img src="'.$product['image'].'" alt="'.$product['name'].'">
-                        <div>
-                            <h3>'.$product['name'].'</h3>
-                            <p>Price: ₹'.$product['price'].'</p>
-                            <form method="POST" style="display:inline-block;">
-                                <input type="hidden" name="product_id" value="'.$product_id.'">
-                                <input type="number" name="quantity" value="'.$quantity.'" min="1" style="width:60px;">
-                                <button type="submit" name="update_qty">Update</button>
-                            </form>
-                            <a href="cart.php?remove='.$product_id.'" onclick="return confirm(\'Remove this item?\')" style="color:red; margin-left:10px;">Remove</a>
-                        </div>
-                    </div>
-                    <div class="cart-total">
-                        ₹'.$item_total.'
-                    </div>
-                </div>';
-        }
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    echo "<p>Your cart is empty.</p>";
+} else {
+    $total = 0;
+    foreach ($_SESSION['cart'] as $item) {
+        $subtotal = $item['price'] * $item['quantity'];
+        $total += $subtotal;
+        echo '<div class="cart-row mb-2 p-2 border rounded bg-light d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>'.$item['name'].'</strong><br>
+                    ₹'.$item['price'].' × '.$item['quantity'].'
+                </div>
+                <div>
+                    ₹'.$subtotal.'
+                </div>
+            </div>';
     }
 
-    echo '<section class="cart-summary">
-            <p><strong>Subtotal:</strong> ₹'.$total.'</p>
-            <a href="billing.php" class="btn">Proceed to Checkout</a>
-        </section>';
-
-} else {
-    echo "<p>Your cart is empty.</p>";
+    echo '<div class="cart-summary text-end mt-4">
+            <h3>Total: ₹'.$total.'</h3>
+            <div class="d-flex gap-3 justify-content-end">
+                <a href="billing.php" class="btn">Proceed to Checkout</a>
+                <a href="home.html" class="btn btn-secondary">Return to Home</a>
+            </div>
+          </div>';
 }
 ?>
-
 </section>
 
 

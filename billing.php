@@ -1,24 +1,41 @@
 <?php
 session_start();
-include "db_connect.php";
-$name = "";
-$email = "";
-$address = "";
-$phone = "";
+include 'db.php';
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM users WHERE id = $user_id";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $name = $user['name'];
-        $email = $user['email'];
-        // If later you add address and phone to users table, you can auto-fill them too.
-    }
+$orderPlaced = false; // 👈 flag for success
+
+// Calculate total
+$total = 0;
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    echo "<p>Your cart is empty. <a href='home.php'>Go back to shop</a></p>";
+    exit();
+}
+foreach ($_SESSION['cart'] as $item) {
+    $subtotal = $item['price'] * $item['quantity'];
+    $total += $subtotal;
 }
 
+// Handle order submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $address = $_POST['address'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "NULL";
+
+    $sql = "INSERT INTO orders (user_id, total, name, address, phone, email) 
+            VALUES ($user_id, '$total', '$name', '$address', '$phone', '$email')";
+
+    if ($conn->query($sql) === TRUE) {
+        unset($_SESSION['cart']);
+        $orderPlaced = true;  // 👈 set the success flag
+    } else {
+        $error = "Error placing order: " . $conn->error;
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,45 +66,49 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </nav>
 </header>
-<section class="checkout-header">
+<section class="cart-header">
     <h1>Checkout</h1>
 </section>
 
-<section class="checkout-form">
+<?php if ($orderPlaced): ?>
 
-<?php
-$total = 0;
-
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-    foreach ($_SESSION['cart'] as $product_id => $quantity) {
-        $sql = "SELECT price FROM products WHERE id = $product_id";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $product = $result->fetch_assoc();
-            $total += $product['price'] * $quantity;
-        }
-    }
-} else {
-    echo "<p>Your cart is empty. Please add some products before checking out.</p>";
-    exit();
-}
-?>
-
-<form action="place_order.php" method="POST">
-    <input type="text" name="name" value="<?php echo $name; ?>" placeholder="Full Name" required>
-    <input type="text" name="address" placeholder="Address" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-    <input type="email" name="email" value="<?php echo $email; ?>" placeholder="Email" required>
-
-
-    <p><strong>Total Amount:</strong> ₹<?php echo $total; ?></p>
-
-    <input type="hidden" name="total" value="<?php echo $total; ?>">
-
-    <button type="submit" class="btn">Place Order</button>
-</form>
-
+<section class="cart-items">
+    <h3>Thank you for your purchase! Your order has been placed.</h3>
+    <a href="home.html" class="btn mt-3">Continue Shopping</a>
 </section>
+
+<?php else: ?>
+
+<section class="cart-items">
+    <h3>Order Summary</h3>
+    <?php
+    foreach ($_SESSION['cart'] as $item) {
+        $subtotal = $item['price'] * $item['quantity'];
+        echo '<div class="cart-row">
+                <div class="cart-product">
+                    <strong>'.$item['name'].'</strong> x '.$item['quantity'].'
+                </div>
+                <div class="cart-total">₹'.$subtotal.'</div>
+              </div>';
+    }
+    ?>
+    <div class="cart-summary">
+        <h3>Total: ₹<?php echo $total; ?></h3>
+    </div>
+</section>
+
+<section class="checkout-form container mt-5">
+    <h3>Billing Details</h3>
+    <form method="POST" action="">
+        <input type="text" name="name" placeholder="Your Name" required><br>
+        <input type="text" name="address" placeholder="Address" required><br>
+        <input type="tel" name="phone" placeholder="Phone Number" required><br>
+        <input type="email" name="email" placeholder="Email Address" required><br>
+        <button type="submit" class="btn mt-3">Place Order</button>
+    </form>
+</section>
+
+<?php endif; ?>
 
 
 </body>

@@ -38,3 +38,24 @@ window.onload = function() {
     });
 
 };
+
+document.querySelectorAll('.add-to-cart-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();  // Stop the form from submitting normally
+
+        const formData = new FormData(form);
+
+        fetch('cart-handler.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result === "added") {
+                const button = form.querySelector('.add-to-cart-btn');
+                button.textContent = "Added ✔";
+                button.disabled = true;
+            }
+        });
+    });
+});

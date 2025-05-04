@@ -1,5 +1,5 @@
 <?php
-include "db_connect.php";
+include "db.php";
 
 $category = "Art & Craft";
 
@@ -55,8 +55,17 @@ if ($result->num_rows > 0) {
                     <p>'.$row['description'].'</p>
                     <p class="price">₹'.$row['price'].'</p>
                 </div>
-                <div class="product-action">
-                    <button class="add-to-cart" data-product-id="'.$row['id'].'" class="add-to-cart">+</button>
+                 <div class="product-action">
+                   <div class="product-action">
+                    <form method="POST" action="cart.php" class="add-to-cart-form">
+                        <input type="hidden" name="id" value="'.$row['id'].'">
+                        <input type="hidden" name="name" value="'.$row['name'].'">
+                        <input type="hidden" name="price" value="'.$row['price'].'">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                    </form>
+
+                    </div>
                 </div>
             </div>';
     }

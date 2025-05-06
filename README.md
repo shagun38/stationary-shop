@@ -1,2 +1,3 @@
 # stationary-shop
  
+I have created a project based upon a stationary shop where I have used php for dynamic response of the website and I have structured website by html and made it visually impressive using css , it has categories like paper stationery , office stationery , art stationery and writing stationery , along with that I have created an admin page where admin can add and remove a category , add and remove a product edit and product see the orders. This all is done with the help of my sql database and php admin , It also contains basic requirements like a login page , a billing page , user cart

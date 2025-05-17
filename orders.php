@@ -14,6 +14,8 @@ include 'db.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+</head>
 </head>
 <body>
 
@@ -42,6 +44,7 @@ include 'db.php';
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Created At</th>
+                <th>Items</th>
             </tr>
         </thead>
         <tbody>
@@ -51,21 +54,36 @@ include 'db.php';
 
             if ($result && $result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
+                    $orderId = $row['id'];
                     echo "<tr>
-                        <td>{$row['id']}</td>
+                        <td>{$orderId}</td>
                         <td>{$row['user_id']}</td>
-                        <td>₹{$row['total']}</td>
-                        <td>{$row['name']}</td>
-                        <td>{$row['address']}</td>
-                        <td>{$row['phone']}</td>
-                        <td>{$row['email']}</td>
+                        <td>₹" . number_format($row['total'], 2) . "</td>
+                        <td>" . htmlspecialchars($row['name']) . "</td>
+                        <td>" . nl2br(htmlspecialchars($row['address'])) . "</td>
+                        <td>" . htmlspecialchars($row['phone']) . "</td>
+                        <td>" . htmlspecialchars($row['email']) . "</td>
                         <td>{$row['created_at']}</td>
-                    </tr>";
+                        <td><ul>";
+
+                    // Fetch order items
+                    $itemRes = $conn->query("SELECT * FROM order_items WHERE order_id = $orderId");
+                    if ($itemRes && $itemRes->num_rows > 0) {
+                        while ($item = $itemRes->fetch_assoc()) {
+                            echo "<li>" . htmlspecialchars($item['product_name']) .
+                                " × {$item['quantity']} (₹" . number_format($item['price'], 2) . " each)</li>";
+                        }
+                    } else {
+                        echo "<li>No items found</li>";
+                    }
+
+                    echo "</ul></td></tr>";
                 }
             } else {
-                echo "<tr><td colspan='8'>No orders found.</td></tr>";
+                echo "<tr><td colspan='9'>No orders found.</td></tr>";
             }
             ?>
+
         </tbody>
     </table>
 

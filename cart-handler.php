@@ -1,32 +1,48 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $item = [
-        'id' => $_POST['id'],
-        'name' => $_POST['name'],
-        'price' => $_POST['price'],
-        'quantity' => $_POST['quantity']
-    ];
+// Redirect to login if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
+$id = $_POST['id'] ?? null;
+$name = $_POST['name'] ?? '';
+$price = $_POST['price'] ?? '';
+$quantity = $_POST['quantity'] ?? 1;
+$action = $_POST['action'] ?? 'add';
 
-    $found = false;
-    foreach ($_SESSION['cart'] as &$cart_item) {
-        if ($cart_item['id'] == $item['id']) {
-            $cart_item['quantity'] += $item['quantity'];
-            $found = true;
-            break;
+if (!$id) {
+    $redirectBack = $_SERVER['HTTP_REFERER'] ?? 'home.php';
+    header("Location: $redirectBack?error=invalid");
+    exit;
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+if ($action === 'remove') {
+    if (isset($_SESSION['cart'][$id])) {
+        $_SESSION['cart'][$id]['quantity']--;
+        if ($_SESSION['cart'][$id]['quantity'] <= 0) {
+            unset($_SESSION['cart'][$id]);
         }
     }
-
-    if (!$found) {
-        $_SESSION['cart'][] = $item;
+} else {
+    if (isset($_SESSION['cart'][$id])) {
+        $_SESSION['cart'][$id]['quantity']++;
+    } else {
+        $_SESSION['cart'][$id] = [
+            'id' => $id,
+            'name' => $name,
+            'price' => $price,
+            'quantity' => $quantity
+        ];
     }
-
-    // Return a simple success message for AJAX
-    echo "added";
 }
-?>
+
+$redirectBack = $_SERVER['HTTP_REFERER'] ?? 'home.php';
+header("Location: $redirectBack");
+exit;

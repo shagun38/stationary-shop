@@ -7,6 +7,7 @@ window.onload = function() {
     }, 1500); // Change every 1.5 seconds
 }
 
+
 // brands
 window.onload = function() {
 
@@ -39,23 +40,106 @@ window.onload = function() {
 
 };
 
-document.querySelectorAll('.add-to-cart-form').forEach(form => {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();  // Stop the form from submitting normally
 
-        const formData = new FormData(form);
+//logic in button
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.dataset.id;
+            updateQuantity(id, 'add', button);
+        });
+    });
 
-        fetch('cart-handler.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(result => {
-            if (result === "added") {
-                const button = form.querySelector('.add-to-cart-btn');
-                button.textContent = "Added ✔";
-                button.disabled = true;
-            }
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const wrapper = btn.closest('.qty-controls');
+            const id = wrapper.dataset.id;
+            const action = btn.classList.contains('plus') ? 'add' : 'remove';
+            updateQuantity(id, action, wrapper);
         });
     });
 });
+
+function updateQuantity(id, action, element) {
+    fetch('cart-handler.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${id}&action=${action}`
+    })
+    .then(res => res.text())
+    .then(response => {
+        const trimmed = response.trim();
+
+        if (trimmed === "login_required") {
+            window.location.href = "login.php";
+            return;
+        }
+
+        const qty = parseInt(trimmed);
+
+        if (!isNaN(qty)) {
+            if (qty === 0) {
+                location.reload();
+            } else {
+                if (element.classList.contains('add-to-cart-btn')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'qty-controls';
+                    wrapper.setAttribute('data-id', id);
+                    wrapper.innerHTML = `
+                        <button class="qty-btn minus">−</button>
+                        <span class="qty-display">${qty}</span>
+                        <button class="qty-btn plus">+</button>
+                    `;
+                    element.replaceWith(wrapper);
+                    attachQtyListeners(wrapper);
+                } else {
+                    const display = element.querySelector('.qty-display');
+                    if (display) display.textContent = qty;
+                }
+            }
+        } else {
+            console.warn("Non-numeric server response:", trimmed);
+        }
+    })
+    .catch(err => {
+        console.error("Fetch error:", err);
+    });
+}
+
+function attachQtyListeners(container) {
+    container.querySelector('.plus').addEventListener('click', () => {
+        const id = container.dataset.id;
+        updateQuantity(id, 'add', container);
+    });
+
+    container.querySelector('.minus').addEventListener('click', () => {
+        const id = container.dataset.id;
+        updateQuantity(id, 'remove', container);
+    });
+}
+
+
+// password
+function validatePassword() {
+    const password = document.getElementById('new_password').value;
+    const confirm = document.getElementById('confirm_password').value;
+
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSpecial = /[\W_]/.test(password);
+    const isLong = password.length >= 8;
+
+    if (password !== confirm) {
+        alert("Passwords do not match.");
+        return false;
+    }
+
+    if (!hasUpper || !hasLower || !hasDigit || !hasSpecial || !isLong) {
+        alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+        return false;
+    }
+
+    return true;
+}
+

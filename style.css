@@ -54,7 +54,7 @@ h1, h2, h3, .logo {
 /* hero section */
 .hero {
     width: 100%;
-    height: 50vh;
+    height: 80vh;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/bg/bg_2.jpg');
     background-size: cover;
     background-position: center;
@@ -80,6 +80,11 @@ h1, h2, h3, .logo {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+}
+.btn:hover {
+    background-color: #246b46;
+    transform: scale(1.03);
+    transition: 0.3s ease-in-out;
 }
 
 
@@ -146,41 +151,48 @@ h1, h2, h3, .logo {
 
 
 /* products section */
-.product-carousel {
-    padding: 30px;
-    text-align: center;
-}
-
-.carousel-container {
+.carousel-row {
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 10px;
+    padding: 20px;
     scroll-behavior: smooth;
+    scrollbar-width: none; 
 }
 
-.product-card {
-    min-width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    flex-shrink: 0;
+.product-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .product-card img {
     width: 100%;
     height: 150px;
     object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.product-card {
+    flex: 0 0 auto;
+    width: 200px;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
 }
 
-.product-card h3 {
-    margin: 10px 0 5px;
+.product-card:hover {
+    transform: scale(1.05);
 }
 
-.product-card p {
-    font-weight: bold;
-}
 
 
 /* brands */
@@ -447,6 +459,29 @@ h1, h2, h3, .logo {
     border-radius: 5px;
     text-decoration: none;
 }
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.qty-btn {
+    padding: 6px 10px;
+    background: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.qty-display {
+    font-weight: bold;
+    min-width: 20px;
+}
+
 
 /* login pg */
 .login-header {

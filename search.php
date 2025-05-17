@@ -1,31 +1,28 @@
 <?php
-include "db.php";
 session_start();
+include 'db.php';
 
+$query = $_GET['query'] ?? '';
+$escaped = $conn->real_escape_string($query);
 
-$category = "Paper Products";
-
-$sql = "SELECT * FROM products WHERE category = '$category'";
+$sql = "SELECT * FROM products 
+        WHERE name LIKE '%$escaped%' OR description LIKE '%$escaped%'";
 $result = $conn->query($sql);
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Your one-stop Stationery Shop for writing supplies, paper products, art & craft materials, and office essentials. Best prices and fast delivery.">
-    <meta name="keywords" content="stationery, writing supplies, paper, office, art, craft, shop online">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-
-    <title>Stationery Shop</title>
+    <title>Search Results - Stationery Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
 </head>
 <body>
 
+<!-- ✅ THEMED HEADER -->
 <header>
     <nav class="navbar">
         <div class="logo"><a href="home.php" style="text-decoration: none; color: #333;">Stationery Shop</a></div>
@@ -78,60 +75,41 @@ $result = $conn->query($sql);
     </div>
     </nav>
 </header>
-<section class="category-header">
-    <h1>Paper Products</h1>
-    <p>High-quality paper products for all your writing and printing needs.</p>
-</section>
-<section class="product-list">
-<?php
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $productId = $row['id'];
-        $quantity = $_SESSION['cart'][$productId]['quantity'] ?? 0;
 
-        echo '<div class="product-row">
-                <div class="product-image">
-                    <img src="' . $row['image'] . '" alt="' . $row['name'] . '">
+<!-- ✅ SEARCH RESULTS -->
+<div class="container mt-5">
+    <h2 class="mb-4">Search Results for "<?php echo htmlspecialchars($query); ?>"</h2>
+
+    <?php if ($result && $result->num_rows > 0): ?>
+        <div class="row g-4">
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm">
+                    <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                        alt="<?php echo htmlspecialchars($row['name']); ?>"
+                        class="card-img-top object-fit-contain"
+                        style="height: 180px; width: 100%; padding: 10px; object-fit: contain;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><?php echo htmlspecialchars($row['name']); ?></h5>
+                            <p class="card-text small"><?php echo htmlspecialchars($row['description']); ?></p>
+                            <p class="fw-bold mb-2">₹<?php echo number_format($row['price'], 2); ?></p>
+                            <form method="POST" action="cart-handler.php" class="mt-auto">
+                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                <input type="hidden" name="name" value="<?php echo htmlspecialchars($row['name']); ?>">
+                                <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-success w-100">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="product-details">
-                    <h3>' . $row['name'] . '</h3>
-                    <p>' . $row['description'] . '</p>
-                    <p class="price">₹' . $row['price'] . '</p>
-                </div>
-                <div class="product-action">';
+            <?php endwhile; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-warning mt-4">No products found matching your search.</div>
+    <?php endif; ?>
+</div>
 
-        if ($quantity > 0) {
-            echo "<div class='qty-controls'>
-                    <form method='POST' action='cart-handler.php'>
-                        <input type='hidden' name='id' value='{$productId}'>
-                        <input type='hidden' name='action' value='remove'>
-                        <button class='qty-btn'>−</button>
-                    </form>
-                    <span class='qty-display'>{$quantity}</span>
-                    <form method='POST' action='cart-handler.php'>
-                        <input type='hidden' name='id' value='{$productId}'>
-                        <input type='hidden' name='action' value='add'>
-                        <button class='qty-btn'>+</button>
-                    </form>
-                </div>";
-        } else {
-            echo "<form method='POST' action='cart-handler.php'>
-                    <input type='hidden' name='id' value='{$productId}'>
-                    <input type='hidden' name='name' value=\"{$row['name']}\">
-                    <input type='hidden' name='price' value='{$row['price']}'>
-                    <input type='hidden' name='quantity' value='1'>
-                    <button type='submit' class='btn btn-success'>Add to Cart</button>
-                </form>";
-        }
-
-        echo '</div></div>';
-
-    }
-} else {
-    echo "<p>No products found.</p>";
-}
-?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

@@ -3,7 +3,7 @@
 include 'db.php';
 
 $products = [];
-$query = "SELECT * FROM products ORDER BY id DESC LIMIT 4"; // or use your own logic
+$query = "SELECT * FROM products ORDER BY id DESC LIMIT 4"; 
 $result = $conn->query($query);
 
 if ($result && $result->num_rows > 0) {

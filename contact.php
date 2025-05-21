@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Shop high-quality stationery, office supplies, and creative tools at our online store.">
     <meta name="keywords" content="stationery, office supplies, art tools, paper, pens, markers">
-    <meta name="author" content="Your Brand Name">
+    <meta name="author" content="shagun">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 

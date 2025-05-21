@@ -1,13 +1,30 @@
 <?php session_start(); ?>
+<?php
+include 'db.php';
+
+$products = [];
+$query = "SELECT * FROM products ORDER BY id DESC LIMIT 4"; // or use your own logic
+$result = $conn->query($query);
+
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Stationery Shop</title>
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shop premium stationery online: pens, paper, office and art supplies. Affordable, fast, and student-friendly.">
-    <meta name="keywords" content="stationery, pens, paper, art, office, school supplies">
+    <meta name="description" content="Shop high-quality stationery, office supplies, and creative tools at our online store.">
+    <meta name="keywords" content="stationery, office supplies, art tools, paper, pens, markers">
+    <meta name="author" content="Your Brand Name">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -16,63 +33,76 @@
 <body>
 
 <header>
-    <nav class="navbar">
-        <div class="logo"><a href="home.php" style="text-decoration: none; color: #333;">Stationery Shop</a></div>
+<nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 
-        <ul class="nav-links">
-            <li><a href="product-category-writing.php">Writing Supplies</a></li>
-            <li><a href="product-category-paper.php">Paper Products</a></li>
-            <li><a href="product-category-art.php">Art & Craft</a></li>
-            <li><a href="product-category-office.php">Office Essentials</a></li>
-        </ul>
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="home.php" style="color: #333;">Stationery Shop</a>
 
-        <div class="nav-right d-flex align-items-center gap-3">
+    <div class="collapse navbar-collapse justify-content-center" id="navCategories">
+    <ul class="navbar-nav mb-2 mb-lg-0 nav-link">
+      <li class="nav-item"><a class="nav-link" href="product-category-writing.php">Writing Supplies</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-paper.php">Paper Products</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-art.php">Art & Craft</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-office.php">Office Essentials</a></li>
+    </ul>
+  </div>
+    <!-- Right: Search + User + Cart + Toggle -->
+    <div class="d-flex align-items-center gap-3 flex-wrap">
 
-    <!-- SEARCH FORM -->
-    <form method="GET" action="search.php" class="d-flex">
-        <input class="form-control me-2" type="search" name="query" placeholder="Search..." required>
-    </form>
+      <!-- Search -->
+      <form method="GET" action="search.php" class="d-flex">
+        <input class="form-control" type="search" name="query" placeholder="Search..." required>
+      </form>
 
-    <!-- ADMIN PANEL BUTTON -->
-    <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+      <!-- Admin Panel -->
+      <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
         <a href="admin.php" class="btn btn-warning btn-sm">Admin Panel</a>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <!-- USER DROPDOWN / LOGIN -->
-    <?php if (isset($_SESSION['user_id'])): ?>
+      <!-- User/Login -->
+      <?php if (isset($_SESSION['user_id'])): ?>
         <div class="dropdown">
-            <img src="images/user-icon.ico" alt="User" width="32" height="32"
-                 class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="user-dashboard.php">Dashboard</a></li>
-                <li><a class="dropdown-item" href="change-password.php">Change Password</a></li>
-                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-            </ul>
+          <img src="images/user-icon.ico" alt="User" width="32" height="32"
+               class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="user-dashboard.php">Dashboard</a></li>
+            <li><a class="dropdown-item" href="change-password.php">Change Password</a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+          </ul>
         </div>
-    <?php else: ?>
-        <a href="login.php" title="Login">
-            <img src="images/user-icon.ico" alt="Login" width="28" height="28">
+      <?php else: ?>
+        <a href="login.php" title="Login" aria-label="Login">
+          <img src="images/user-icon.ico" alt="Login" width="28" height="28">
         </a>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <!-- CART -->
-    <a href="cart.php" class="position-relative" title="Cart">
+      <!-- Cart -->
+      <a href="cart.php" class="position-relative" title="Cart" aria-label="View Cart">
         <img src="images/cart-icon.ico" alt="Cart" width="28" height="28">
         <?php if (!empty($_SESSION['cart'])): ?>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                <?php echo array_sum(array_column($_SESSION['cart'], 'quantity')); ?>
-            </span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <?= array_sum(array_column($_SESSION['cart'], 'quantity')) ?>
+          </span>
         <?php endif; ?>
-    </a>
+      </a>
+
+      <!-- Hamburger Toggle for Categories -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCategories"
+              aria-controls="navCategories" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
     </div>
-    </nav>
+  </div>
+</nav>
 </header>
 
 <section class="hero">
     <div class="hero-content">
         <h1>Welcome to Stationery Shop</h1>
         <p>Your one-stop shop for writing, paper, and art supplies.</p>
-        <a href="#shop" class="btn">Shop Now</a>
+        <a href="#shop" class="btn" aria-label="Start shopping our stationery categories">Start Shopping</a>
     </div>
 </section>
 
@@ -107,38 +137,40 @@
 <section class="product-carousel">
   <h2 class="text-center mb-4">Featured Products</h2>
 
-    <div class="carousel-row" id="featuredCarousel">
+        <div class="container">
+    <div class="row g-4">
+        <?php foreach ($products as $product): ?>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100">
+            <img src="<?= htmlspecialchars($product['image']) ?>"
+                 alt="<?= htmlspecialchars($product['name']) ?>"
+                 class="card-img-top img-fluid"
+                 style="object-fit: contain; height: 180px;">
 
-        <div class="product-card">
-            <img src="images/featured products/pen.jpg" alt="Ball Pen">
-            <h3>Ball Pen</h3>
-            <p>₹10</p>
+            <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
+
+                <!-- Optional short description if available -->
+                <?php if (!empty($product['description'])): ?>
+                    <p class="card-text small"><?= htmlspecialchars($product['description']) ?></p>
+                <?php endif; ?>
+
+                <p class="card-text fw-bold text-success">₹<?= htmlspecialchars($product['price']) ?></p>
+
+                <a href="#shop"
+                   class="btn btn-success mb-2"
+                   aria-label="Add <?= htmlspecialchars($product['name']) ?> to cart">Add to Cart</a>
+            </div>
         </div>
-        <div class="product-card">
-            <img src="images/featured products/marker.jpg" alt="Permanent Marker">
-            <h3>Permanent Marker</h3>
-            <p>₹25</p>
-        </div>
-        <div class="product-card">
-            <img src="images/featured products/spiral notebook.jpg" alt="Spiral Notebook">
-            <h3>Spiral Notebook</h3>
-            <p>₹60</p>
-        </div>
-        <div class="product-card">
-            <img src="images/featured products/sketch book.jpg" alt="Sketchbook">
-            <h3>Sketchbook</h3>
-            <p>₹120</p>
-        </div>
-                <div class="product-card">
-            <img src="images/featured products/pen.jpg" alt="Ball Pen">
-            <h3>Ball Pen</h3>
-            <p>₹10</p>
-        </div>
-        
     </div>
-</section>
+<?php endforeach; ?>
 
-
+    </div>
+    </div>
+        </div>
+    </section>
+<br>
+<br>
 <section class="brands">
     <h2>Our Partner Brands</h2><br>
     <div id="brandCarousel" class="carousel slide">
@@ -175,7 +207,8 @@
         </div>
     </div>
 </section>
-
+<br>
+<br>
 <section class="newsletter">
     <h2>Stay Updated!</h2>
     <p>Subscribe to our newsletter and get 10% off your first purchase.</p>
@@ -183,8 +216,8 @@
         <input type="email" placeholder="Enter your email" id="emailInput" required>
         <button type="submit">Subscribe</button>
     </form>
-    <p id="successMessage" style="color: green; font-weight: bold; display: none; margin-top: 15px;">
-        Thank you for subscribing!
+    <p id="successMessage" role="alert" style="color: green; font-weight: bold; display: none; margin-top: 15px;">
+    Thank you for subscribing!
     </p>
 </section>
 
@@ -206,7 +239,7 @@
     </div>
 </section>
 
-<section class="about-us">
+<section class="about-us" id="about">
     <h2>Why Choose Our Stationery Shop?</h2>
     <p>
         We offer a wide variety of high-quality stationery products at affordable prices.
@@ -218,8 +251,8 @@
 <footer class="site-footer">
     <div class="footer-content">
         <div class="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
+            <a href="#about">About Us</a>
+            <a href="contact.php">Contact</a>
             <a href="#">Privacy Policy</a>
         </div>
         <p>&copy; 2025 Stationery Shop. All rights reserved.</p>

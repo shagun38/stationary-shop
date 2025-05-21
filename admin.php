@@ -25,6 +25,7 @@ include 'db.php';
             <li><a href="products.php">Products</a></li>
             <li><a href="categories.php">Categories</a></li>
             <li><a href="orders.php">Orders</a></li>
+            <li><a href="admin-messages.php">User Queries</a></li>
         </ul>
     </nav>
 </header>
@@ -33,23 +34,30 @@ include 'db.php';
     <h1>Welcome to Admin Dashboard</h1>
     <p>Manage your products, categories, and orders with ease.</p><br><br>
 
-    <div class="d-flex justify-content-center gap-5 flex-wrap mt-4">
-        <div class="card p-3" style="width: 250px;">
-            <h3>Products</h3>
-            <p>Add, edit, or remove products.</p><br>
-            <a href="products.php" class="btn">Manage Products</a>
-        </div>
-        <div class="card p-3" style="width: 250px;">
-            <h3>Categories</h3>
-            <p>Add, edit, or remove categories.</p>
-            <a href="categories.php" class="btn">Manage Categories</a>
-        </div>
-        <div class="card p-3" style="width: 250px;">
-            <h3>Orders</h3>
-            <p>View and manage customer orders.</p>
-            <a href="orders.php" class="btn">View Orders</a>
-        </div>
+<div class="d-flex justify-content-center gap-5 flex-wrap mt-4">
+    <div class="card p-3" style="width: 250px;">
+        <h3>Products</h3>
+        <p>Add, edit, or remove products.</p><br>
+        <a href="products.php" class="btn">Manage Products</a>
     </div>
+    <div class="card p-3" style="width: 250px;">
+        <h3>Categories</h3>
+        <p>Add, edit, or remove categories.</p>
+        <a href="categories.php" class="btn">Manage Categories</a>
+    </div>
+    <div class="card p-3" style="width: 250px;">
+        <h3>Orders</h3>
+        <p>View and manage customer orders.</p>
+        <a href="orders.php" class="btn">View Orders</a>
+    </div>
+    <div class="card p-3" style="width: 250px;">
+        <h3>User Queries</h3>
+        <p>View and respond to customer messages.</p>
+        <a href="admin-messages.php" class="btn">View Messages</a>
+    </div>
+</div>
+
+
 
     <div class="d-flex justify-content-center mt-4">
         <a href="http://localhost/stationary-shop/home.php" class="btn btn-secondary">Return to Home</a>

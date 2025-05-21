@@ -614,3 +614,68 @@ a.action-link:hover {
         text-align: left;
     }
 }
+
+/* Hamburger icon style */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+}
+
+a:focus, button:focus, input:focus {
+  outline: none;
+  outline-offset: 2px;
+}
+button:focus, .btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-theme {
+  background-color: #1B6F4E;
+  color: #fff;
+  border: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-theme:hover {
+  background-color: #14593F;
+}

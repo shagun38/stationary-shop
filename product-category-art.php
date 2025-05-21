@@ -27,56 +27,69 @@ $result = $conn->query($sql);
 <body>
 
 <header>
-    <nav class="navbar">
-        <div class="logo"><a href="home.php" style="text-decoration: none; color: #333;">Stationery Shop</a></div>
+<nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 
-        <ul class="nav-links">
-            <li><a href="product-category-writing.php">Writing Supplies</a></li>
-            <li><a href="product-category-paper.php">Paper Products</a></li>
-            <li><a href="product-category-art.php">Art & Craft</a></li>
-            <li><a href="product-category-office.php">Office Essentials</a></li>
-        </ul>
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="home.php" style="color: #333;">Stationery Shop</a>
 
-        <div class="nav-right d-flex align-items-center gap-3">
+    <div class="collapse navbar-collapse justify-content-center" id="navCategories">
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="product-category-writing.php">Writing Supplies</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-paper.php">Paper Products</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-art.php">Art & Craft</a></li>
+      <li class="nav-item"><a class="nav-link" href="product-category-office.php">Office Essentials</a></li>
+    </ul>
+  </div>
+    <!-- Right: Search + User + Cart + Toggle -->
+    <div class="d-flex align-items-center gap-3 flex-wrap">
 
-    <!-- SEARCH FORM -->
-    <form method="GET" action="search.php" class="d-flex">
-        <input class="form-control me-2" type="search" name="query" placeholder="Search..." required>
-    </form>
+      <!-- Search -->
+      <form method="GET" action="search.php" class="d-flex">
+        <input class="form-control" type="search" name="query" placeholder="Search..." required>
+      </form>
 
-    <!-- ADMIN PANEL BUTTON -->
-    <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+      <!-- Admin Panel -->
+      <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
         <a href="admin.php" class="btn btn-warning btn-sm">Admin Panel</a>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <!-- USER DROPDOWN / LOGIN -->
-    <?php if (isset($_SESSION['user_id'])): ?>
+      <!-- User/Login -->
+      <?php if (isset($_SESSION['user_id'])): ?>
         <div class="dropdown">
-            <img src="images/user-icon.ico" alt="User" width="32" height="32"
-                 class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="user-dashboard.php">Dashboard</a></li>
-                <li><a class="dropdown-item" href="change-password.php">Change Password</a></li>
-                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-            </ul>
+          <img src="images/user-icon.ico" alt="User" width="32" height="32"
+               class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;">
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="user-dashboard.php">Dashboard</a></li>
+            <li><a class="dropdown-item" href="change-password.php">Change Password</a></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+          </ul>
         </div>
-    <?php else: ?>
-        <a href="login.php" title="Login">
-            <img src="images/user-icon.ico" alt="Login" width="28" height="28">
+      <?php else: ?>
+        <a href="login.php" title="Login" aria-label="Login">
+          <img src="images/user-icon.ico" alt="Login" width="28" height="28">
         </a>
-    <?php endif; ?>
+      <?php endif; ?>
 
-    <!-- CART -->
-    <a href="cart.php" class="position-relative" title="Cart">
+      <!-- Cart -->
+      <a href="cart.php" class="position-relative" title="Cart" aria-label="View Cart">
         <img src="images/cart-icon.ico" alt="Cart" width="28" height="28">
         <?php if (!empty($_SESSION['cart'])): ?>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                <?php echo array_sum(array_column($_SESSION['cart'], 'quantity')); ?>
-            </span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            <?= array_sum(array_column($_SESSION['cart'], 'quantity')) ?>
+          </span>
         <?php endif; ?>
-    </a>
+      </a>
+
+      <!-- Hamburger Toggle for Categories -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCategories"
+              aria-controls="navCategories" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
     </div>
-    </nav>
+  </div>
+</nav>
 </header>
 <section class="category-header">
     <h1>Art & Craft</h1>
@@ -105,7 +118,7 @@ if ($result->num_rows > 0) {
                     <form method='POST' action='cart-handler.php'>
                         <input type='hidden' name='id' value='{$productId}'>
                         <input type='hidden' name='action' value='remove'>
-                        <button class='qty-btn'>−</button>
+                        <button class='qty-btn'>-</button>
                     </form>
                     <span class='qty-display'>{$quantity}</span>
                     <form method='POST' action='cart-handler.php'>

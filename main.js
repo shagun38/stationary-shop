@@ -1,48 +1,40 @@
-// banner
-window.onload = function() {
-    const banner = document.getElementById('offerBanner');
-
-    setInterval(() => {
-        banner.classList.toggle('active-banner');
-    }, 1500); // Change every 1.5 seconds
-}
-
-
-// brands
-window.onload = function() {
-
-    const carousel = document.getElementById('brandCarousel');
-
-    setInterval(() => {
-        const firstItem = carousel.firstElementChild;
-
-        const clone = firstItem.cloneNode(true);
-        carousel.appendChild(clone); 
-        carousel.removeChild(firstItem); 
-
-    }, 2000); 
-}
-
-//newsletter
-window.onload = function() {
-
-    const form = document.getElementById('newsletterForm');
-    const emailInput = document.getElementById('emailInput');
-    const successMessage = document.getElementById('successMessage');
-
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        if (emailInput.value.trim() !== "") {
-            successMessage.style.display = "block";
-            form.reset(); 
-        }
-    });
-
-};
-
-
-//logic in button
 document.addEventListener("DOMContentLoaded", () => {
+    // Banner toggle
+    const banner = document.getElementById('offerBanner');
+    if (banner) {
+        setInterval(() => {
+            banner.classList.toggle('active-banner');
+        }, 1500);
+    }
+
+    // Brand carousel
+    const carousel = document.getElementById('brandCarousel');
+    if (carousel) {
+        setInterval(() => {
+            const firstItem = carousel.firstElementChild;
+            if (firstItem) {
+                const clone = firstItem.cloneNode(true);
+                carousel.appendChild(clone);
+                carousel.removeChild(firstItem);
+            }
+        }, 2000);
+    }
+
+    // Newsletter form
+    const form = document.getElementById('newsletterForm');
+    if (form) {
+        const emailInput = document.getElementById('emailInput');
+        const successMessage = document.getElementById('successMessage');
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            if (emailInput.value.trim() !== "") {
+                successMessage.style.display = "block";
+                form.reset();
+            }
+        });
+    }
+
+    // Add-to-cart buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', () => {
             const id = button.dataset.id;
@@ -50,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Quantity controls
     document.querySelectorAll('.qty-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const wrapper = btn.closest('.qty-controls');
@@ -60,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Quantity logic
 function updateQuantity(id, action, element) {
     fetch('cart-handler.php', {
         method: 'POST',
@@ -118,8 +112,7 @@ function attachQtyListeners(container) {
     });
 }
 
-
-// password
+// Password validation
 function validatePassword() {
     const password = document.getElementById('new_password').value;
     const confirm = document.getElementById('confirm_password').value;
@@ -143,3 +136,7 @@ function validatePassword() {
     return true;
 }
 
+// Hamburger toggle
+function toggleMenu() {
+    document.getElementById('navMenu').classList.toggle('show');
+}

@@ -2,14 +2,14 @@
 include 'db.php';
 session_start();
 
-// Handle add category
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_category'])) {
     $new_category = trim($_POST['new_category']);
     if (!empty($new_category)) {
-        // Check if category already exists
+     
         $check = $conn->query("SELECT DISTINCT category FROM products WHERE category = '$new_category'");
         if ($check->num_rows == 0) {
-            // Insert a placeholder product to register category
+        
             $sql = "INSERT INTO products (category, name, description, price, image) 
                     VALUES ('$new_category', 'Placeholder', 'Placeholder description', 0, 'placeholder.jpg')";
             $conn->query($sql);

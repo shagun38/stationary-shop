@@ -112,7 +112,7 @@ function attachQtyListeners(container) {
     });
 }
 
-// Password validation
+
 function validatePassword() {
     const password = document.getElementById('new_password').value;
     const confirm = document.getElementById('confirm_password').value;
@@ -134,9 +134,4 @@ function validatePassword() {
     }
 
     return true;
-}
-
-// Hamburger toggle
-function toggleMenu() {
-    document.getElementById('navMenu').classList.toggle('show');
 }

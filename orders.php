@@ -66,7 +66,7 @@ include 'db.php';
                         <td>{$row['created_at']}</td>
                         <td><ul>";
 
-                    // Fetch order items
+                   
                     $itemRes = $conn->query("SELECT * FROM order_items WHERE order_id = $orderId");
                     if ($itemRes && $itemRes->num_rows > 0) {
                         while ($item = $itemRes->fetch_assoc()) {

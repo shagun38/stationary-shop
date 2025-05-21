@@ -1,13 +1,11 @@
 <?php
 include 'db.php';
 
-// Get product ID
 $id = $_GET['id'] ?? null;
 if (!$id) {
     die("Product ID not provided.");
 }
 
-// Fetch current product data
 $sql = "SELECT * FROM products WHERE id = $id";
 $result = $conn->query($sql);
 if ($result->num_rows == 0) {
@@ -16,7 +14,6 @@ if ($result->num_rows == 0) {
 
 $product = $result->fetch_assoc();
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = $_POST['category'];
     $name = $_POST['name'];

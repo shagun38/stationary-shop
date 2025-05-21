@@ -30,7 +30,6 @@ $result = $conn->query($sql);
 <nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
   <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 
-    <!-- Logo -->
     <a class="navbar-brand fw-bold" href="home.php" style="color: #333;">Stationery Shop</a>
 
     <div class="collapse navbar-collapse justify-content-center" id="navCategories">
@@ -41,20 +40,19 @@ $result = $conn->query($sql);
       <li class="nav-item"><a class="nav-link" href="product-category-office.php">Office Essentials</a></li>
     </ul>
   </div>
-    <!-- Right: Search + User + Cart + Toggle -->
+  
     <div class="d-flex align-items-center gap-3 flex-wrap">
 
-      <!-- Search -->
+   
       <form method="GET" action="search.php" class="d-flex">
         <input class="form-control" type="search" name="query" placeholder="Search..." required>
       </form>
 
-      <!-- Admin Panel -->
       <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
         <a href="admin.php" class="btn btn-warning btn-sm">Admin Panel</a>
       <?php endif; ?>
 
-      <!-- User/Login -->
+   
       <?php if (isset($_SESSION['user_id'])): ?>
         <div class="dropdown">
           <img src="images/user-icon.ico" alt="User" width="32" height="32"
@@ -71,7 +69,7 @@ $result = $conn->query($sql);
         </a>
       <?php endif; ?>
 
-      <!-- Cart -->
+  
       <a href="cart.php" class="position-relative" title="Cart" aria-label="View Cart">
         <img src="images/cart-icon.ico" alt="Cart" width="28" height="28">
         <?php if (!empty($_SESSION['cart'])): ?>
@@ -81,7 +79,7 @@ $result = $conn->query($sql);
         <?php endif; ?>
       </a>
 
-      <!-- Hamburger Toggle for Categories -->
+   
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCategories"
               aria-controls="navCategories" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // your db connection file
+include 'db.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars(trim($_POST['name']));

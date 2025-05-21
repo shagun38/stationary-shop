@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if email already exists
+
     $check_sql = "SELECT * FROM users WHERE email = '$email'";
     $check_result = $conn->query($check_sql);
 

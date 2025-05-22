@@ -80,7 +80,7 @@ function updateQuantity(id, action, element) {
                     wrapper.className = 'qty-controls';
                     wrapper.setAttribute('data-id', id);
                     wrapper.innerHTML = `
-                        <button class="qty-btn minus">−</button>
+                        <button class="qty-btn minus">-</button>
                         <span class="qty-display">${qty}</span>
                         <button class="qty-btn plus">+</button>
                     `;
